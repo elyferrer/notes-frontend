@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from './categorySlice';
 import Category from './Category';
+import CategoryForm from './CategoryForm';
 
 const Categories = () => {
     const categories = useSelector((state) => state.category);
     const dispatch = useDispatch();
+    const [showForm, setShowForm] = useState(false);
 
     const getCategoriesList = async () => {
         await dispatch(getCategories());
@@ -15,23 +17,30 @@ const Categories = () => {
         getCategoriesList();
     }, [dispatch]);
 
-    useEffect(() => { console.log(categories); }, [categories]);
+    useEffect(() => {}, [categories]);
 
     return (
-        <div>
-            {
-                categories.data.length > 0 ?
-                    categories.data.map((category) => (
-                        <div key={category._id}>
-                            <Category 
-                                id={category._id}
-                                name={category.name} 
-                                description={category.description} 
-                            />
-                        </div>
-                    )) 
-                    : ''
-            }
+        <div className='p-3'>
+            <div>
+                <button className='bg-blue-700 text-white px-4 py-2 rounded' onClick={ () => setShowForm(true) }>Add New Group</button>
+            </div>
+            <div>
+                {
+                    categories.data.length > 0 ?
+                        categories.data.map((category) => (
+                            <div key={category._id}>
+                                <Category 
+                                    id={category._id}
+                                    name={category.name} 
+                                />
+                            </div>
+                        )) 
+                        : ''
+                }
+            </div>
+            <div>
+                <CategoryForm showForm={showForm} setShowForm={setShowForm} />
+            </div>
         </div>
     )
 }

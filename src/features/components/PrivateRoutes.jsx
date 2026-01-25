@@ -5,10 +5,10 @@ import { Outlet, Navigate } from "react-router-dom";
 const PrivateRoutes = () => {
     const user = useSelector((state) => state.user);
 
-    useEffect(() => {}, [user]);
+    useEffect(() => { }, [user]);
 
     return (
-        user.data ? 
+        user.data?.username !== undefined ? 
             <Outlet /> :
             <Navigate to="/login" />
     )
