@@ -7,7 +7,8 @@ const initialState = {
     loading: null,
     success: null,
     error: null,
-    data: {}
+    data: {},
+    isLoggedIn: localStorage.getItem('is_logged_in')
 };
 
 export const login = createAsyncThunk(
@@ -19,6 +20,7 @@ export const login = createAsyncThunk(
                 password
             }, { withCredentials: true });
 
+            localStorage.setItem('is_logged_in', true);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data)
@@ -33,6 +35,18 @@ export const getUserDetails = createAsyncThunk(
             const response = await axios.get(`${API_URL}/users`, { withCredentials: true });
             
             return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+);
+
+export const logout = createAsyncThunk(
+    'user/logout',
+    async (id, thunkAPI) => {
+        try {
+            await axios.delete(`${API_URL}/users/logout`, { withCredentials: true });
+            localStorage.clear();
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data)
         }

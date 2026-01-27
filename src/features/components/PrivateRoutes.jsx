@@ -8,9 +8,7 @@ const PrivateRoutes = () => {
     useEffect(() => { }, [user]);
 
     return (
-        user.data?.username !== undefined ? 
-            <Outlet /> :
-            <Navigate to="/login" />
+        user.isLoggedIn ?  <Outlet /> : <Navigate to="/login" />
     )
 }
 

@@ -13,7 +13,13 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = { username: username, password: password };
-        await dispatch(login(formData));
+        try {
+            await dispatch(login(formData));
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     useEffect(() => { if (user.data?.username !== undefined) navigate('/'); }, [user]);
