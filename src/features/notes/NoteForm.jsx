@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { createCategory } from './categorySlice';
+import { createNote } from './noteSlice';
+import { useParams } from 'react-router-dom';
 
-const CategoryForm = ({ showForm, setShowForm }) => {
+const NoteForm = ({ showForm, setShowForm }) => {
     const dispatch = useDispatch();
+    const { categoryId } = useParams();
+    
     const [formData, setFormData] = useState({
-        name: '',
-        description: ''
+        title: '',
+        details: '',
+        category_id: categoryId
     });
 
     const [selected, setSelected] = useState(null);
@@ -23,7 +27,7 @@ const CategoryForm = ({ showForm, setShowForm }) => {
             // if (selected) {
             //     await dispatch(updateTask({ id: selected, formData })).unwrap();
             // } else {
-                await dispatch(createCategory(formData)).unwrap();
+                await dispatch(createNote(formData)).unwrap();
             // }
 
             // setFormData({
@@ -49,20 +53,20 @@ const CategoryForm = ({ showForm, setShowForm }) => {
             <div className={`fixed top-0 left-0 w-full h-screen bg-black bg-opacity-60 flex justify-center p-2 items-center ${showForm ? 'visible pointer-events-auto' : 'hidden pointer-events-none'}`}>
                 <form onSubmit={handleSubmit} className='w-96 bg-white p-3 rounded'>
                     <div className='m-2'>
-                        <h1 className='text-xl text-center'>{ selected ? 'Update' : 'Create New'} Grouping</h1>
+                        <h1 className='text-xl text-center'>{ selected ? 'Update' : 'Create New'} Note</h1>
                     </div>
                     <div className='m-2'>
                         <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                            Name
+                            Title
                         </span>
-                        <input type="text" className="w-full rounded p-2 border border-gray-400" name="name" value={formData.name} placeholder="Enter Name" onChange={handleChange} />
+                        <input type="text" className="w-full rounded p-2 border border-gray-400" name="title" value={formData.title} placeholder="Enter Title" onChange={handleChange} />
                     </div>
 
                     <div className='m-2'>
                         <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                            Description
+                            Details
                         </span>
-                        <textarea name="description" className="w-full rounded p-2 resize-none border border-gray-400" value={formData.description} placeholder="Enter Description" onChange={handleChange}></textarea>
+                        <textarea name="details" className="w-full rounded p-2 resize-none border border-gray-400" value={formData.details} placeholder="Enter Details" onChange={handleChange}></textarea>
                     </div>
 
                     <div className='m-2'>
@@ -75,4 +79,4 @@ const CategoryForm = ({ showForm, setShowForm }) => {
     )
 }
 
-export default CategoryForm
+export default NoteForm

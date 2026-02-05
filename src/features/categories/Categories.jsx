@@ -30,8 +30,7 @@ const Categories = () => {
                         categories.data.map((category) => (
                             <div key={category._id}>
                                 <Category 
-                                    id={category._id}
-                                    name={category.name} 
+                                    data={category}
                                 />
                             </div>
                         )) 

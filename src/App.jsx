@@ -9,6 +9,8 @@ import { getUserDetails, logout } from './features/users/userSlice';
 import CategoryHome from './features/categories/CategoryHome';
 import Notes from './features/notes/Notes';
 import NoteDetails from './features/notes/NoteDetails';
+import CharacterDetails from './features/characters/CharacterDetails';
+import Characters from './features/characters/Characters';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +44,8 @@ function App() {
             <Route element={<CategoryHome />} path="/:categoryId" />
             <Route element={<Notes />} path="/:categoryId/notes" />
             <Route element={<NoteDetails />} path="/note/:id" />
+            <Route element={<Characters />} path="/:categoryId/characters" />
+            <Route element={<CharacterDetails />} path="/character/:id" />
           </Route>
           <Route element={<Login />} path="/login" />
         </Routes>

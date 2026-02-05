@@ -1,13 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getNotesByCategory } from './noteSlice';
 import { useParams } from 'react-router-dom';
 import Note from './Note';
+import NoteForm from './NoteForm';
 
 const Notes = () => {
     const notes = useSelector((state) => state.note);
     const { categoryId } = useParams();
     const dispatch = useDispatch();
+    const [showForm, setShowForm] = useState(false);
 
     const getNotesList = async () => {
         await dispatch(getNotesByCategory(categoryId));
@@ -17,11 +19,12 @@ const Notes = () => {
         getNotesList();
     }, [dispatch]);
 
-    useEffect(() => { console.log('notes', notes); }, [notes]);
+    useEffect(() => { }, [notes]);
 
     return (
         <div className='mx-auto w-2/5 min-h-screen bg-red-300 p-3'>
             <h1 className='text-3xl text-center p-3'>Notes</h1>
+            <button className='bg-blue-700 text-white px-4 py-2 rounded' onClick={ () => setShowForm(true) }>Add New Note</button>
             {
                 notes.data.length > 0 ?
                     notes.data.map((note) => (
@@ -33,7 +36,12 @@ const Notes = () => {
                     )) 
                     : ''
             }
+            
+            <div>
+                <NoteForm showForm={showForm} setShowForm={setShowForm} />
+            </div>
         </div>
+        
     )
 }
 

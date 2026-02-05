@@ -7,7 +7,8 @@ const initialState = {
     loading: null,
     success: null,
     error: null,
-    data: []
+    data: [],
+    selected: {}
 };
 
 export const getCategories = createAsyncThunk(
@@ -36,6 +37,19 @@ export const createCategory = createAsyncThunk(
     }
 )
 
+export const getCategory = createAsyncThunk(
+    'category/getCategory',
+    async (id, thunkAPI) => {
+        try {
+            const response = await axios.get(`${API_URL}/categories/${id}`, { withCredentials: true });
+            
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+);
+
 export const categorySlice = createSlice({
     name: 'category',
     initialState,
@@ -54,6 +68,7 @@ export const categorySlice = createSlice({
             state.loading = null;
             state.error = { message: 'Failed to retrieve categories' };
         });
+        
         builder.addCase(createCategory.pending, (state) => {
             state.loading = true;
         });
@@ -66,6 +81,20 @@ export const categorySlice = createSlice({
             state.data = action.payload;
             state.loading = null;
             state.error = { message: 'Failed to create category' };
+        });
+
+        builder.addCase(getCategory.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getCategory.fulfilled, (state, action) => {
+            state.selected = action.payload;
+            state.loading = null;
+            state.success = { message: 'Successfully retrieved category details' };
+        });
+        builder.addCase(getCategory.rejected, (state, action) => {
+            state.data = action.payload;
+            state.loading = null;
+            state.error = { message: 'Failed to get category details' };
         });
     }
 })

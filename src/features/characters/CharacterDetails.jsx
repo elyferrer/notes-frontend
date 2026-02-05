@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { getNoteDetails, updateNote, deleteNote } from './noteSlice';
+// import { getNoteDetails, updateNote, deleteNote } from './noteSlice';
 
-const NoteDetails = () => {
+const CharacterDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const note = useSelector((state) => state.note);
@@ -16,7 +16,7 @@ const NoteDetails = () => {
     });
 
     const handleGetDetails = async () => {
-        await dispatch(getNoteDetails(id));
+        // await dispatch(getNoteDetails(id));
     }
 
     const handleChange = (e) => {
@@ -27,7 +27,7 @@ const NoteDetails = () => {
 
     const handleSubmit = async () => {
         try {
-            await dispatch(updateNote({id, formData})).unwrap();
+            // await dispatch(updateNote({id, formData})).unwrap();
         } catch (error) {
             console.log(error.message)
         }
@@ -37,7 +37,7 @@ const NoteDetails = () => {
     const handleDelete = async () => {
         if(confirm('Are you sure you want to delete this note?')) {
             try {
-                await dispatch(deleteNote(id));
+                // await dispatch(deleteNote(id));
                 navigate(-1);
             } catch (error) {
                 console.log(error);
@@ -109,4 +109,4 @@ const NoteDetails = () => {
     )
 }
 
-export default NoteDetails
+export default CharacterDetails

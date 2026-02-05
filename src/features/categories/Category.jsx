@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 
-const Category = ({ id, name, description }) => {
+const Category = ({ data }) => {
     return (
         <div className='grid mt-2'>
-            <Link to={`/${id}`} className='p-3 bg-white/75 rounded'>
-                { name } { description }
+            <Link to={`/${data._id}`} className='p-3 bg-white/75 rounded'>
+                { data.name }
             </Link>
-            
-            
         </div>
     )
 }
